@@ -1,4 +1,5 @@
 import arcade
+import random
 
 LARGHEZZA = 350
 ALTEZZA = 600
@@ -54,6 +55,30 @@ class Gioco(arcade.Window):
             self.lista_torre_grande_cattiva.append(self.torre_grande_cattiva)
         buoni()
         cattivi()
+
+    def draw_health_bar(self):
+        HEALTHBAR_WIDTH =100
+        HEALTHBAR_HEIGHT =50
+        
+        ratio = max(0, min(1, 25/50))
+        #Rettangolo rosso (sfondo)
+        arcade.draw_lbwh_rectangle_filled(
+            self.torre_piccola.center_x,
+            self.torre_piccola.center_y,
+            HEALTHBAR_WIDTH,
+            HEALTHBAR_HEIGHT,
+            arcade.color.RED
+        )
+
+        #Rettangolo verde (vita attuale)
+        arcade.draw_lbwh_rectangle_filled(
+            self.torre_piccola.center_x,
+            self.torre_piccola.center_y,
+            HEALTHBAR_WIDTH * ratio,
+            HEALTHBAR_HEIGHT,
+            arcade.color.GREEN
+        )
+
     def on_draw(self):
         arcade.draw_texture_rect(
             self.background,
@@ -63,9 +88,12 @@ class Gioco(arcade.Window):
         self.lista_torre_grande.draw()
         self.lista_torre_piccola_cattiva.draw()
         self.lista_torre_grande_cattiva.draw()
+        self.draw_health_bar()
+
+    
 
     def on_update(self,deltatime):
-        print("ciao")
+        print(self.lista_torre_piccola)
 
 def main():
     gioco = Gioco()
