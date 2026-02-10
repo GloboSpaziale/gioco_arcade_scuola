@@ -21,36 +21,36 @@ class Gioco(arcade.Window):
         self.setup()
     def setup(self):
         def buoni():
-            self.torre_piccola = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_piccola = arcade.Sprite("./assets/torri_piccole.PNG")
             self.torre_piccola.center_x = 267
-            self.torre_piccola.center_y = 140
-            self.torre_piccola.scale = 0.1
+            self.torre_piccola.center_y = 150
+            self.torre_piccola.scale = 0.40
             self.lista_torre_piccola.append(self.torre_piccola)
-            self.torre_piccola = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_piccola = arcade.Sprite("./assets/torri_piccole.PNG")
             self.torre_piccola.center_x = 78
-            self.torre_piccola.center_y = 140
-            self.torre_piccola.scale = 0.1
+            self.torre_piccola.center_y = 150
+            self.torre_piccola.scale = 0.40
             self.lista_torre_piccola.append(self.torre_piccola)
-            self.torre_grande = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_grande = arcade.Sprite("./assets/torre_grande.png")
             self.torre_grande.center_x = 174
             self.torre_grande.center_y = 115
-            self.torre_grande.scale = 0.2
+            self.torre_grande.scale = 0.45
             self.lista_torre_grande.append(self.torre_grande)
         def cattivi():
-            self.torre_piccola_cattiva = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_piccola_cattiva = arcade.Sprite("./assets/torri_piccole_cattive.png")
             self.torre_piccola_cattiva.center_x = 267
-            self.torre_piccola_cattiva.center_y = 460
-            self.torre_piccola_cattiva.scale = 0.1
+            self.torre_piccola_cattiva.center_y = 465
+            self.torre_piccola_cattiva.scale = 0.40
             self.lista_torre_piccola_cattiva.append(self.torre_piccola_cattiva)
-            self.torre_piccola_cattiva = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_piccola_cattiva = arcade.Sprite("./assets/torri_piccole_cattive.png")
             self.torre_piccola_cattiva.center_x = 78
-            self.torre_piccola_cattiva.center_y = 460
-            self.torre_piccola_cattiva.scale = 0.1
+            self.torre_piccola_cattiva.center_y = 465
+            self.torre_piccola_cattiva.scale = 0.40
             self.lista_torre_piccola_cattiva.append(self.torre_piccola_cattiva)
-            self.torre_grande_cattiva = arcade.Sprite("./assets/porre_prova.png")
+            self.torre_grande_cattiva = arcade.Sprite("./assets/torre_grande_cattiva.png")
             self.torre_grande_cattiva.center_x = 174
-            self.torre_grande_cattiva.center_y = 485
-            self.torre_grande_cattiva.scale = 0.2
+            self.torre_grande_cattiva.center_y = 530
+            self.torre_grande_cattiva.scale = 0.45
             self.lista_torre_grande_cattiva.append(self.torre_grande_cattiva)
         buoni()
         cattivi()
