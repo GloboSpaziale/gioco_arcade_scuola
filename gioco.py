@@ -15,6 +15,7 @@ class Gioco(arcade.Window):
         self.background = None
 
         self.setup()
+        
     def setup(self):
         self.background = arcade.load_texture("./assets/sfondo.png")
 
