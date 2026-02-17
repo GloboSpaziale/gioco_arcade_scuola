@@ -30,6 +30,9 @@ class Gioco(arcade.Window):
             arcade.LBWH(0,0,self.larghezza,self.altezza)
         )
         self.torre_big.on_draw()
+        self.torre_small.on_draw()
+        self.torre_big_hell.on_draw()
+        self.torre_small_hell.on_draw()
         
 
 

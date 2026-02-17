@@ -1,5 +1,6 @@
 import arcade
 import torre
+import barre_vita
 
 class torri_piccola_class(torre.torre_class):
 
