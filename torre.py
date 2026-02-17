@@ -16,7 +16,8 @@ class torre_class(arcade.Sprite):
     def setup(self):
         pass
     def on_draw(self):
-        barre_vita.draw_health_bar(self.vita_torre,self.vita_attuale,self.torre.center_x,self.torre.center_y,self.altezza_creatura)
+        for i in self.lista_torre :
+            barre_vita.draw_health_bar(self.vita_torre,self.vita_attuale,i.center_x,i.center_y,self.altezza_creatura)
         self.lista_torre.draw()
         self.lista_torre.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
     
