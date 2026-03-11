@@ -34,13 +34,10 @@ class Gioco(arcade.Window):
         self.torre_small.on_draw()
         self.torre_big_hell.on_draw()
         self.torre_small_hell.on_draw()
-        
-
-
-    
 
     def on_update(self,deltatime):
-        print("ciao")
+        pass
+
 
 def main():
     gioco = Gioco()
