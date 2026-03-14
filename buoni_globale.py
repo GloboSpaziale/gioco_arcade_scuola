@@ -6,18 +6,18 @@ import barre_vita
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
-class Enemy_general(arcade.Sprite):
-    def __init__(self, image_file, scale, velocita_nemico, vita):
+class Buoni_general(arcade.Sprite):
+    def __init__(self, image_file, scale, velocita_buono, vita):
         
         super().__init__(image_file, scale)
 
-        self.velocita_nemico = velocita_nemico
+        self.velocita_buono = velocita_buono
         self.vita = vita
         self.margin = -50
         self.edge = random.randint(0,3)
         self.vita_attuale =20
         self.altezza_creatura=20
-        self.enemy_list = arcade.sprite_list()
+        self.buoni_list = arcade.sprite_list()
 
         self.current_target = None
 
@@ -39,7 +39,7 @@ class Enemy_general(arcade.Sprite):
         nearest_distance = float("inf")
 
         for target in self.buoni_list:
-            dist = arcade.get_distance_between_sprites(self.Enemy_general, target)
+            dist = arcade.get_distance_between_sprites(self.Buoni_general, target)
 
             if dist < nearest_distance:
                 nearest_distance = dist
@@ -64,11 +64,11 @@ class Enemy_general(arcade.Sprite):
                 dx /= distance
                 dy /= distance
 
-                self.Enemy_general.center_x += dx * self.velocita_nemico
-                self.Enemy_general.center_y += dy * self.velocita_nemico
+                self.Buoni_general.center_x += dx * self.velocita_buono
+                self.Buoni_general.center_y += dy * self.velocita_buono
 
     def on_draw(self):
         for i in self.enemy_list :
             barre_vita.draw_health_bar(self.vita,self.vita_attuale,i.center_x,i.center_y,self.altezza_creatura)
-        self.enemy_list.draw()
-        self.enemy_list.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
+        self.buoni_list.draw()
+        self.buoni_list.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
