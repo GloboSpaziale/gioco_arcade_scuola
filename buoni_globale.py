@@ -2,23 +2,22 @@ import arcade
 import random
 import math
 import barre_vita
-from nemico_globale import Enemy_general
 
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self, image_file, scale, velocita_buono, vita):
+    def __init__(self, velocita_buono):
         
-        super().__init__(image_file, scale)
+        super().__init__("./assets/torri_piccole.PNG", 0.2)
 
         self.velocita_buono = velocita_buono
-        self.vita = vita
+        self.vita = 20
         self.margin = -50
-        self.edge = random.randint(0,3)
+        self.edge = 1
         self.vita_attuale =20
         self.altezza_creatura=20
-        self.buoni_list = arcade.SpriteList()
+
 
         self.current_target = None
 
@@ -35,30 +34,25 @@ class Buoni_general(arcade.Sprite):
             self.center_x = self.margin
             self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
 
-    def assign_targets(self,):
+    def assign_targets(self, targets):
 
-        available_targets = Enemy_general.enemy
+        available_targets = targets
 
-        for enemy in self.buoni_list:
+        nearest = None
+        nearest_distance = float("inf")
 
-            nearest = None
-            nearest_distance = float("inf")
+        for target in available_targets:
+            dist = arcade.get_distance_between_sprites(self, target)
 
-            for target in available_targets:
-                dist = arcade.get_distance_between_sprites(enemy, target)
+            if dist < nearest_distance:
+                nearest_distance = dist
+                nearest = target
+        return nearest
 
-                if dist < nearest_distance:
-                    nearest_distance = dist
-                    nearest = target
-                
-            if nearest:
-                enemy.current_target = nearest
-                available_targets.remove(nearest)
-
-    def movimento_verso_cattivi(self,):
+    def movimento_verso_cattivi(self,targets):
         # se non ho target o il target non esiste più
         if self.current_target is None or self.current_target not in self.targets:
-            self.current_target = self.assign_targets()
+            self.current_target = self.assign_targets(targets)
 
         # inseguo il target salvato
         if self.current_target:
@@ -76,7 +70,5 @@ class Buoni_general(arcade.Sprite):
                 self.center_y += dy * self.velocita_buono
 
     def on_draw(self):
-        for i in self.enemy_list :
-            barre_vita.draw_health_bar(self.vita,self.vita_attuale,i.center_x,i.center_y,self.altezza_creatura)
-        self.buoni_list.draw()
-        self.buoni_list.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
+
+        barre_vita.draw_health_bar(self.vita,self.vita_attuale,self.center_x,self.center_y,self.altezza_creatura)
