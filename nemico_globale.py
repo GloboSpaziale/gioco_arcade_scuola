@@ -8,7 +8,7 @@ SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
 class Enemy_general(arcade.Sprite):
-    def __init__(self, velocita_nemico):
+    def __init__(self, velocita_nemico =20):
         
         super().__init__("./assets/torre_grande_cattiva.PNG", 0.2)
 
@@ -71,4 +71,4 @@ class Enemy_general(arcade.Sprite):
 
     def on_draw(self):
 
-        barre_vita.draw_health_bar(self.vita,self.vita_attuale,i.center_x,i.center_y,self.altezza_creatura)
+        barre_vita.draw_health_bar(self.vita,self.vita_attuale,self.center_x,self.center_y,self.altezza_creatura)

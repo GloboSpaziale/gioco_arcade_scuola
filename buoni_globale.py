@@ -7,7 +7,7 @@ SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self, velocita_buono):
+    def __init__(self, velocita_buono =20):
         
         super().__init__("./assets/torri_piccole.PNG", 0.2)
 

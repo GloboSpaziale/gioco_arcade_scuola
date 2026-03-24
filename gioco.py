@@ -18,8 +18,8 @@ class Gioco(arcade.Window):
         self.enemy_list = arcade.SpriteList()
         self.buoni_list = arcade.SpriteList()
         self.conta=0
-        self.nemico = nemico_globale.Enemy_general(20)
-        self.buono = buoni_globale.Buoni_general(20)
+        self.nemico = nemico_globale.Enemy_general()
+        self.buono = buoni_globale.Buoni_general()
         self.setup()
         
     def setup(self):
