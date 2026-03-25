@@ -42,7 +42,7 @@ class Gioco(arcade.Window):
         self.torre_small_hell.on_draw()
         self.torre_big_hell.on_draw()
         self.torre_big.on_draw()
-        self.buoni_list.draw()
+        self.enemy_list.draw()
         self.enemy_list.draw_hit_boxes(arcade.color.AMAZON)
         self.buoni_list.draw()
         self.buoni_list.draw_hit_boxes(arcade.color.RED_DEVIL)
