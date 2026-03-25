@@ -8,14 +8,14 @@ SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
 class Enemy_general(arcade.Sprite):
-    def __init__(self, velocita_nemico =20):
+    def __init__(self, velocita_nemico =5):
         
-        super().__init__("./assets/torre_grande_cattiva.PNG", 0.2)
+        super().__init__("./assets/torri_piccole_cattive.PNG", 1)
 
         self.velocita_nemico = velocita_nemico
         self.vita = 20
-        self.margin = -50
-        self.edge = 3
+        self.margin = 50
+        self.edge = 2
         self.vita_attuale =20
         self.altezza_creatura=20
 
@@ -34,7 +34,7 @@ class Enemy_general(arcade.Sprite):
             self.center_x = self.margin
             self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
 
-    def assign_targets(enemy, targets):
+    def assign_targets(self, targets):
 
         available_targets = targets
 
@@ -42,23 +42,23 @@ class Enemy_general(arcade.Sprite):
         nearest_distance = float("inf")
 
         for target in available_targets:
-            dist = arcade.get_distance_between_sprites(enemy, target)
+            dist = arcade.get_distance_between_sprites(self, target)
 
             if dist < nearest_distance:
                 nearest_distance = dist
                 nearest = target
         return nearest
 
-    def movimento_verso_buoni(self,enemy, targets):
+    def movimento_verso_buoni(self, targets):
         # se non ho target o il target non esiste più
-        if self.current_target is None or self.current_target not in self.targets:
-            self.current_target = self.assign_targets(enemy, targets)
+        if self.current_target is None or self.current_target not in targets:
+            self.current_target = self.assign_targets(targets)
 
         # inseguo il target salvato
         if self.current_target:
 
-            dx = self.current_target.center_x - enemy.center_x
-            dy = self.current_target.center_y - enemy.center_y
+            dx = self.current_target.center_x - self.center_x
+            dy = self.current_target.center_y - self.center_y
 
             distance = math.sqrt(dx*dx + dy*dy)
 

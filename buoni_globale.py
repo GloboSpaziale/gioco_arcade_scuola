@@ -7,14 +7,14 @@ SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self, velocita_buono =20):
+    def __init__(self, velocita_buono =5):
         
         super().__init__("./assets/torri_piccole.PNG", 0.2)
 
         self.velocita_buono = velocita_buono
         self.vita = 20
         self.margin = -50
-        self.edge = 1
+        self.edge = 0
         self.vita_attuale =20
         self.altezza_creatura=20
 
@@ -22,17 +22,17 @@ class Buoni_general(arcade.Sprite):
         self.current_target = None
 
         if self.edge == 0:  # alto
-            self.center_x = random.randint(self.margin, SCREEN_WIDTH - self.margin)
-            self.center_y = SCREEN_HEIGHT - self.margin
+            self.center_x = random.randint(self.margin, SCREEN_WIDTH + self.margin)
+            self.center_y = SCREEN_HEIGHT + self.margin
         elif self.edge == 1:  # destra
-            self.center_x = SCREEN_WIDTH - self.margin
-            self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
+            self.center_x = SCREEN_WIDTH + self.margin
+            self.center_y = random.randint(self.margin, SCREEN_HEIGHT + self.margin)
         elif self.edge == 2:  # basso
-            self.center_x = random.randint(self.margin, SCREEN_WIDTH - self.margin)
+            self.center_x = random.randint(self.margin, SCREEN_WIDTH + self.margin)
             self.center_y = self.margin
         elif self.edge == 3:  # sinistra
             self.center_x = self.margin
-            self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
+            self.center_y = random.randint(self.margin, SCREEN_HEIGHT + self.margin)
 
     def assign_targets(self, targets):
 
@@ -51,7 +51,7 @@ class Buoni_general(arcade.Sprite):
 
     def movimento_verso_cattivi(self,targets):
         # se non ho target o il target non esiste più
-        if self.current_target is None or self.current_target not in self.targets:
+        if self.current_target is None or self.current_target not in targets:
             self.current_target = self.assign_targets(targets)
 
         # inseguo il target salvato

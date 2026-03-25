@@ -18,8 +18,8 @@ class Gioco(arcade.Window):
         self.enemy_list = arcade.SpriteList()
         self.buoni_list = arcade.SpriteList()
         self.conta=0
-        self.nemico = nemico_globale.Enemy_general()
-        self.buono = buoni_globale.Buoni_general()
+        # self.nemico = nemico_globale.Enemy_general()
+        # self.buono = buoni_globale.Buoni_general()
         self.setup()
         
     def setup(self):
@@ -37,24 +37,36 @@ class Gioco(arcade.Window):
             self.background,
             arcade.LBWH(0,0,self.larghezza,self.altezza)
         )
-        self.torre_big.on_draw()
+        
         self.torre_small.on_draw()
-        self.torre_big_hell.on_draw()
         self.torre_small_hell.on_draw()
+        self.torre_big_hell.on_draw()
+        self.torre_big.on_draw()
         self.buoni_list.draw()
+        self.enemy_list.draw_hit_boxes(arcade.color.AMAZON)
         self.buoni_list.draw()
+        self.buoni_list.draw_hit_boxes(arcade.color.RED_DEVIL)
 
     def on_update(self,delta_time):
         self.conta+=delta_time
-        if self.conta>=2:
-            self.enemy_list.append(self.nemico)
-            self.buoni_list.append(self.buono)
-            self.conta =0
-
+        if self.conta>2:
+            for i in range (1,10):
+                nemico = nemico_globale.Enemy_general()
+                buono = buoni_globale.Buoni_general()
+                self.enemy_list.append(nemico)
+                self.buoni_list.append(buono)
+                self.conta =0
+        
         for enemy in self.enemy_list:
-            nemico_globale.Enemy_general.movimento_verso_buoni(enemy=enemy, targets=self.buoni_list)
+            enemy.movimento_verso_buoni(self.buoni_list)
+            enemy.on_draw()
+            # self.enemy_list.draw_hit_boxes(arcade.color.AMAZON)
         for buoni in self.buoni_list:
-            buoni_globale.Buoni_general.movimento_verso_cattivi(self.enemy_list)
+            buoni.on_draw()
+            buoni.movimento_verso_cattivi(self.enemy_list)
+            # self.buoni_list.draw_hit_boxes(arcade.color.RED_DEVIL)
+    
+        
         
 
 
