@@ -1,11 +1,11 @@
 import arcade
 
-def draw_health_bar(vita_massima : int,vita_attuale : int,x_creatura,y_creatura,altezza_creatura = 20):
-    HEALTHBAR_WIDTH =100
-    HEALTHBAR_HEIGHT =20
+def draw_health_bar(vita_massima : int,vita_attuale : int,x_creatura,y_creatura,altezza_creatura = 20, altezza_barra = 10, larghezza_barra = 60):
+    HEALTHBAR_WIDTH = larghezza_barra
+    HEALTHBAR_HEIGHT = altezza_barra
     vita = vita_attuale
     massimo = vita_massima
-    x_attuale=x_creatura - 48
+    x_attuale=x_creatura - HEALTHBAR_WIDTH/2
     y_attuale=y_creatura + altezza_creatura
 
     ratio = max(0, min(1, vita/massimo))

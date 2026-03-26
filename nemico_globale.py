@@ -4,11 +4,11 @@ import math
 import barre_vita
 import gioco
 
-SCREEN_WIDTH = 700
+SCREEN_WIDTH = 350
 SCREEN_HEIGHT = 600
 
 class Enemy_general(arcade.Sprite):
-    def __init__(self, velocita_nemico =5):
+    def __init__(self ,x ,y , velocita_nemico =2):
         
         super().__init__("./assets/torri_piccole_cattive.PNG", 0.2)
 
@@ -21,19 +21,9 @@ class Enemy_general(arcade.Sprite):
 
         self.current_target = None
 
-        if self.edge == 0:  # alto
-            self.center_x = random.randint(self.margin, SCREEN_WIDTH - self.margin)
-            self.center_y = SCREEN_HEIGHT - self.margin
-        elif self.edge == 1:  # destra
-            self.center_x = SCREEN_WIDTH - self.margin
-            self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
-        elif self.edge == 2:  # basso
-            self.center_x = random.randint(self.margin, SCREEN_WIDTH - self.margin)
-            self.center_y = self.margin
-        elif self.edge == 3:  # sinistra
-            self.center_x = self.margin
-            self.center_y = random.randint(self.margin, SCREEN_HEIGHT - self.margin)
-
+        self.center_x = x
+        self.center_y = y
+        
     def assign_targets(self, targets):
 
         available_targets = targets
