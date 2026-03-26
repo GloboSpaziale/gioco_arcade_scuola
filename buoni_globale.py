@@ -1,5 +1,4 @@
 import arcade
-import random
 import math
 import barre_vita
 
@@ -7,22 +6,35 @@ SCREEN_WIDTH = 350
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self ,x ,y , velocita_buono =2):
+    def __init__(self ,x ,y , velocita_buono =0.5, velocita_attacco = 1 ):
         
         super().__init__("./assets/torri_piccole.PNG", 0.2)
 
         self.velocita_buono = velocita_buono
         self.vita = 20
-        self.margin = -50
-        self.edge = 0
-        self.vita_attuale =20
-        self.altezza_creatura=20
+        self.vita_attuale = self.vita
+        self.danno = 2
 
+        self.frequenza_attacco = velocita_attacco
+        self.timer_attacco = velocita_attacco
+        
+        self.altezza_creatura=20
 
         self.current_target = None
 
         self.center_x = x
         self.center_y = y
+
+    def update_timer(self, delta_time):
+        """Fa scorrere il tempo per il prossimo attacco"""
+        if self.timer_attacco > 0:
+            self.timer_attacco -= delta_time
+        else:
+            self.timer_attacco = self.frequenza_attacco
+
+    def puo_attaccare(self):
+        """Controlla se il timer è scaduto"""
+        return self.timer_attacco <= 0
 
     def assign_targets(self, targets):
 
