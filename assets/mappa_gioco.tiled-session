@@ -1,0 +1,46 @@
+{
+    "activeFile": "Senza Titolo.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Senza Titolo.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 313.5,
+                "y": 455
+            }
+        },
+        "Senza Titolo.tmx#sfondo": {
+            "scaleInDock": 1
+        },
+        "sfondo.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/PC ASUS/gioco_arcade_scuola/assets",
+    "map.height": 542,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 2,
+    "map.tileWidth": 2,
+    "map.width": 267,
+    "openFiles": [
+        "Senza Titolo.tmx"
+    ],
+    "project": "mappa_gioco.tiled-project",
+    "property.type": "object",
+    "recentFiles": [
+        "Senza Titolo.tmx",
+        "sfondo.tsx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 2,
+        "width": 2
+    }
+}

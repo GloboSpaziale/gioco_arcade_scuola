@@ -12,7 +12,6 @@ class Gioco(arcade.Window):
         super().__init__(LARGHEZZA, ALTEZZA, "circa clash")
         self.altezza = ALTEZZA
         self.larghezza = LARGHEZZA
-        arcade.set_background_color(arcade.color.BLACK)
         self.background = None
         self.lista_torri_buone = arcade.SpriteList()
         self.lista_torri_cattive  = arcade.SpriteList()
@@ -25,6 +24,8 @@ class Gioco(arcade.Window):
         self.cattivi = arcade.SpriteList()
         self.game_over = False
         self.vittoria = False
+        self.lista_muri = arcade.SpriteList(use_spatial_hash=True)
+
         self.setup()
         
     def setup(self):
@@ -41,12 +42,17 @@ class Gioco(arcade.Window):
         self.torre_grande = torre_grande.torre_grande_class()
         self.lista_torri_buone.append(self.torre_grande)
         self.buoni.extend(self.lista_torri_buone)
+
+        muro = arcade.SpriteSolidColor(155.6, 51, arcade.color.RED) # Lo facciamo rosso per vederlo noi
+        muro.center_x = 175
+        muro.center_y = 300
+        self.lista_muri.append(muro)
+
         
 
     def on_draw(self):
 
         if self.game_over:
-            # Scuriamo leggermente lo schermo (opzionale)
             arcade.draw_lbwh_rectangle_filled(0, 0, 
                                          LARGHEZZA, ALTEZZA, 
                                          (0, 0, 0, 150))
@@ -59,7 +65,6 @@ class Gioco(arcade.Window):
             return
         
         if self.vittoria:
-            # Scuriamo leggermente lo schermo (opzionale)
             arcade.draw_lbwh_rectangle_filled(0, 0, 
                                          LARGHEZZA, ALTEZZA, 
                                          (0, 0, 0, 150))
@@ -102,7 +107,7 @@ class Gioco(arcade.Window):
     def on_update(self,delta_time):
         
         for enemy in self.enemy_list:
-            enemy.movimento_verso_buoni(self.buoni)
+            enemy.movimento_verso_buoni(self.buoni,self.lista_muri)
             enemy.update_timer(delta_time)
 
         for enemy in self.enemy_list:
@@ -127,7 +132,7 @@ class Gioco(arcade.Window):
                 buoni.remove_from_sprite_lists()
 
         for buoni in self.buoni_list:
-            buoni.movimento_verso_cattivi(self.cattivi)
+            buoni.movimento_verso_cattivi(self.cattivi,self.lista_muri)
             buoni.update_timer(delta_time)
 
         for buoni in self.buoni_list:
@@ -168,11 +173,12 @@ class Gioco(arcade.Window):
             nemico = nemico_globale.Enemy_general(x, y)
             self.enemy_list.append(nemico)
             self.cattivi.append(nemico)
+            print(x,y)
         elif button == arcade.MOUSE_BUTTON_RIGHT:
             buono = buoni_globale.Buoni_general(x, y)
             self.buoni_list.append(buono)
             self.buoni.append(buono)
-            
+
 def main():
     gioco = Gioco()
     arcade.run()

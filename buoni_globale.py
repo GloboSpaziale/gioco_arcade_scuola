@@ -51,7 +51,7 @@ class Buoni_general(arcade.Sprite):
                 nearest = target
         return nearest
 
-    def movimento_verso_cattivi(self,targets):
+    def movimento_verso_cattivi(self,targets,lista_muri):
         # se non ho target o il target non esiste più
         if self.current_target is None or self.current_target not in targets:
             self.current_target = self.assign_targets(targets)
@@ -69,7 +69,12 @@ class Buoni_general(arcade.Sprite):
                 dy /= distance
 
                 self.center_x += dx * self.velocita_buono
+                if arcade.check_for_collision_with_list(self, lista_muri):
+                    self.center_x -= dx * self.velocita_buono
+
                 self.center_y += dy * self.velocita_buono
+                if arcade.check_for_collision_with_list(self, lista_muri):
+                    self.center_y -= dy * self.velocita_buono
 
     def on_draw(self):
 
