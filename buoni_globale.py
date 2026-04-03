@@ -6,19 +6,21 @@ SCREEN_WIDTH = 350
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self ,x ,y , velocita_buono =0.5, velocita_attacco = 1 ):
+    def __init__(self ,x ,y , texture="./assets/torri_piccole.PNG", scala = 0.2, velocita_buono =0.5, velocita_attacco = 1, danno = 1, costo = 1):
         
-        super().__init__("./assets/torri_piccole.PNG", 0.2)
+        super().__init__(texture, scala)
 
         self.velocita_buono = velocita_buono
         self.vita = 20
         self.vita_attuale = self.vita
-        self.danno = 2
+        self.danno = danno
+
+        self.costo=costo
 
         self.frequenza_attacco = velocita_attacco
         self.timer_attacco = velocita_attacco
         
-        self.altezza_creatura=20
+        self.altezza_creatura = self.top - self.center_y
 
         self.current_target = None
 
@@ -26,14 +28,12 @@ class Buoni_general(arcade.Sprite):
         self.center_y = y
 
     def update_timer(self, delta_time):
-        """Fa scorrere il tempo per il prossimo attacco"""
         if self.timer_attacco > 0:
             self.timer_attacco -= delta_time
         else:
             self.timer_attacco = self.frequenza_attacco
 
     def puo_attaccare(self):
-        """Controlla se il timer è scaduto"""
         return self.timer_attacco <= 0
 
     def assign_targets(self, targets):
@@ -50,6 +50,22 @@ class Buoni_general(arcade.Sprite):
                 nearest_distance = dist
                 nearest = target
         return nearest
+    
+    def bordi(self):
+    
+        # Controllo Sinistra
+        if self.left < 30:
+            self.left = 30
+        # Controllo Destra
+        elif self.right > 320:
+            self.right = 320
+
+        # Controllo Basso
+        if self.bottom < 0:
+            self.bottom = 0
+        # Controllo Alto
+        elif self.top > 600 - (self.altezza_creatura+10):
+            self.top = 600 - (self.altezza_creatura+10)
 
     def movimento_verso_cattivi(self,targets,lista_muri):
         # se non ho target o il target non esiste più
@@ -70,11 +86,12 @@ class Buoni_general(arcade.Sprite):
 
                 self.center_x += dx * self.velocita_buono
                 if arcade.check_for_collision_with_list(self, lista_muri):
-                    self.center_x -= dx * self.velocita_buono
+                    self.center_x += dx * self.velocita_buono
 
                 self.center_y += dy * self.velocita_buono
                 if arcade.check_for_collision_with_list(self, lista_muri):
                     self.center_y -= dy * self.velocita_buono
+        self.bordi()
 
     def on_draw(self):
 
