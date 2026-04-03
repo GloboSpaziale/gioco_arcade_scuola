@@ -6,12 +6,12 @@ SCREEN_WIDTH = 350
 SCREEN_HEIGHT = 600
 
 class Enemy_general(arcade.Sprite):
-    def __init__(self ,x ,y, texture="./assets/torri_piccole_cattive.PNG", scala = 0.2, velocita_nemico =0.5, velocita_attacco = 1, danno = 1, costo = 1):
+    def __init__(self ,x ,y , texture="./assets/torri_piccole_cattive.PNG", scala = 0.2, velocita_nemico =0.5, vita =20, velocita_attacco = 1, danno = 1, costo = 1):
         
         super().__init__(texture, scala)
 
         self.velocita_nemico = velocita_nemico
-        self.vita = 20
+        self.vita = vita
         self.vita_attuale = self.vita
         self.danno = danno
 

@@ -24,8 +24,8 @@ class Gioco(arcade.Window):
 
         self.conta=0
 
-        self.mouse_x = None
-        self.mouse_y = None
+        self.mouse_x = 0
+        self.mouse_y = 0
 
         self.buoni = arcade.SpriteList()
         self.cattivi = arcade.SpriteList()
@@ -41,6 +41,9 @@ class Gioco(arcade.Window):
         self.elisir = 0
         self.carica_elisir = 0
         self.percentuele_elisir = 0
+
+        self.mazzo = []
+        self.mano = []
 
         self.setup()
         
@@ -75,7 +78,13 @@ class Gioco(arcade.Window):
         muro.center_x = 318
         muro.center_y = 300
         self.lista_muri.append(muro)
-        
+
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y,"./assets/porre_prova.png",0.02)
+        self.mazzo.append(buono)
+        buono2=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y)
+        self.mazzo.append(buono2)
+        buono3=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y,"./assets/torri.png",0.02)
+        self.mazzo.append(buono3)
 
     def on_draw(self):
 
@@ -97,7 +106,7 @@ class Gioco(arcade.Window):
         for i in self.lista_torri_cattive:
             i.on_draw()
 
-            self.lista_torri_buone.draw()
+        self.lista_torri_buone.draw()
         for i in self.lista_torri_buone:
             i.on_draw()
 
@@ -227,13 +236,17 @@ class Gioco(arcade.Window):
             self.percentuele_elisir -= self.buono.costo
             self.elisir -= self.buono.costo
             self.buono = None
-    
+
 
     def on_key_press(self, symbol, modifiers):
 
         if symbol == arcade.key.KEY_1:
-            self.buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y)
+            self.buono = self.mazzo[0].clone()
         elif symbol == arcade.key.KEY_2:
+            self.buono = self.mazzo[1].clone()
+        elif symbol == arcade.key.KEY_3:
+            self.buono = self.mazzo[2].clone()
+        elif symbol == arcade.key.KEY_5:
             self.nemico=nemico_globale.Enemy_general(self.mouse_x,self.mouse_y)
         
 

@@ -6,12 +6,15 @@ SCREEN_WIDTH = 350
 SCREEN_HEIGHT = 600
 
 class Buoni_general(arcade.Sprite):
-    def __init__(self ,x ,y , texture="./assets/torri_piccole.PNG", scala = 0.2, velocita_buono =0.5, velocita_attacco = 1, danno = 1, costo = 1):
+    def __init__(self ,x ,y , texture="./assets/torri_piccole.PNG", scala = 0.2, velocita_buono =0.5, vita =20, velocita_attacco = 1, danno = 1, costo = 1):
         
         super().__init__(texture, scala)
 
+        self.immagine_path = texture
+        self.scala=scala
+
         self.velocita_buono = velocita_buono
-        self.vita = 20
+        self.vita = vita
         self.vita_attuale = self.vita
         self.danno = danno
 
@@ -26,6 +29,10 @@ class Buoni_general(arcade.Sprite):
 
         self.center_x = x
         self.center_y = y
+
+    def clone(self):
+        """Crea e restituisce una nuova istanza identica a questa"""
+        return Buoni_general(self.center_x, self.center_y, self.immagine_path, self.scala,self.velocita_buono, self.vita,self.frequenza_attacco,self.danno, self.costo)
 
     def update_timer(self, delta_time):
         if self.timer_attacco > 0:
