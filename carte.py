@@ -6,7 +6,6 @@ def nuova_carta(appena_usata,  lista_in_uso, lista_mazzo):
     nuova_lista.remove(nuova)
     while carta_in_mano(nuova,lista_in_uso,appena_usata):
         nuova = lista_mazzo[random.randint(0,7)]
-        print(nuova,"\n______________------------------__________________")
     nuova_lista.append(nuova)
     return nuova_lista
 
