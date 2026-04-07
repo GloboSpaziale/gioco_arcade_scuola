@@ -10,6 +10,9 @@ class Enemy_general(arcade.Sprite):
         
         super().__init__(texture, scala)
 
+        self.image_path = texture
+        self.scala = scala
+
         self.velocita_nemico = velocita_nemico
         self.vita = vita
         self.vita_attuale = self.vita
@@ -26,6 +29,10 @@ class Enemy_general(arcade.Sprite):
 
         self.center_x = x
         self.center_y = y
+
+    def clone(self):
+        # Crea e restituisce una nuova istanza identica a questa
+        return Enemy_general(self.center_x, self.center_y, self.image_path, self.scala,self.velocita_nemico, self.vita,self.frequenza_attacco,self.danno, self.costo)
 
     def update_timer(self, delta_time):
         if self.timer_attacco > 0:
@@ -86,11 +93,18 @@ class Enemy_general(arcade.Sprite):
 
                 self.center_x += dx * self.velocita_nemico
                 if arcade.check_for_collision_with_list(self, lista_muri):
-                    self.center_x += dx * self.velocita_nemico
+                    if self.left<=64:
+                        self.center_x += 1
+                    elif self.right>= 286:
+                        self.center_x -= 1
+                    elif (self.center_x<=175):
+                        self.center_x -= 1
+                    else:
+                        self.center_x += 1
+                    self.center_x -= dx * self.velocita_nemico
 
-                self.center_y += dy * self.velocita_nemico
-                if arcade.check_for_collision_with_list(self, lista_muri):
-                    self.center_y -= dy * self.velocita_nemico
+                if not arcade.check_for_collision_with_list(self, lista_muri):
+                    self.center_y += dy * self.velocita_nemico
         self.bordi()
 
     def on_draw(self):

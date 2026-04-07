@@ -5,6 +5,7 @@ import torre_grande
 import nemico_globale
 import buoni_globale
 import carte
+import bot
 import barra_elisir
 
 LARGHEZZA = 350
@@ -42,6 +43,11 @@ class Gioco(arcade.Window):
         self.carica_elisir = 0
         self.percentuele_elisir = 0
 
+        self.elisir_cattivo = 0
+        self.carica_elisir_cattivo = 0
+
+        self.lista_carte_cattive=bot.scelta_cattivo(bot.mazzo_cattivo())
+        self.cattivo_da_spawnare=None
         self.mazzo = []
         self.mano = []
 
@@ -79,12 +85,23 @@ class Gioco(arcade.Window):
         muro.center_y = 300
         self.lista_muri.append(muro)
 
-        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y,"./assets/porre_prova.png",0.02)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y,"./assets/buono_verde.png",0.75,1,20,1,3,3)
         self.mazzo.append(buono)
-        buono2=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y)
-        self.mazzo.append(buono2)
-        buono3=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y,"./assets/torri.png",0.02)
-        self.mazzo.append(buono3)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/combattente_buono.png",0.75,0.5,23,0.75,5,3)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/danni_buono.png",0.65,1,23,0.75,5,4)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/goblin_buono.png",0.75,0.5,15,1,3,2)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/scheletro_buono.png",0.75,vita=6,danno=2)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/ragno_buono.png",0.75,0.6,17,1,3,2)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/tank_buono.png",0.75 ,0.1,60,2,10,7)
+        self.mazzo.append(buono)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/veloce_buono.png",0.75,2,30,2,5, 5)
+        self.mazzo.append(buono)
+        self.mano = carte.prima_mano(self.mazzo)
 
     def on_draw(self):
 
@@ -111,6 +128,19 @@ class Gioco(arcade.Window):
             i.on_draw()
 
         barra_elisir.draw_elisir_bar(self.elisir,self.percentuele_elisir)
+
+        for carta1 in self.mazzo:
+            if carta1==self.mano[0]:
+                arcade.draw_texture_rect(carta1.texture,arcade.XYWH(32,300,30,51))
+        for carta2 in self.mazzo:
+            if carta2==self.mano[1]:
+                arcade.draw_texture_rect(carta2.texture,arcade.XYWH(136.1,300,30,51))
+        for carta3 in self.mazzo:
+            if carta3==self.mano[2]:
+                arcade.draw_texture_rect(carta3.texture,arcade.XYWH(213.9,300,30,51))
+        for carta4 in self.mazzo:
+            if carta4==self.mano[3]:
+                arcade.draw_texture_rect(carta4.texture,arcade.XYWH(318,300,30,51))
 
         self.lista_torri_cattive.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
         self.lista_torri_buone.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
@@ -195,6 +225,16 @@ class Gioco(arcade.Window):
                 enemy.remove_from_sprite_lists()
         
         self.elisir_update(delta_time)
+        self.elisir_cattivo_update(delta_time)
+
+        self.cattivo_da_spawnare=bot.spawna_cattivo(self.lista_carte_cattive,self.elisir_cattivo)
+        if self.cattivo_da_spawnare!=None:
+            self.lista_carte_cattive=bot.scelta_cattivo(bot.mazzo_cattivo())
+            for i in self.cattivo_da_spawnare:
+                self.enemy_list.append(i)
+                self.cattivi.append(i)
+            self.elisir_cattivo-=bot.costo(self.cattivo_da_spawnare)
+            self.cattivo_da_spawnare=None
         
         if self.torre_grande.vita_attuale <= 0:
             self.game_over = True
@@ -211,6 +251,14 @@ class Gioco(arcade.Window):
             self.carica_elisir = 0
         if self.percentuele_elisir <10:
             self.percentuele_elisir += deltatime/2
+    
+    def elisir_cattivo_update(self,deltatime):
+        self.carica_elisir_cattivo += deltatime
+        if self.carica_elisir_cattivo >= 2:
+            if self.elisir_cattivo <10:
+
+                self.elisir_cattivo += 1
+            self.carica_elisir_cattivo = 0
         
         
 
@@ -236,16 +284,23 @@ class Gioco(arcade.Window):
             self.percentuele_elisir -= self.buono.costo
             self.elisir -= self.buono.costo
             self.buono = None
+            self.mano = carte.nuova_carta(self.carta_usata,self.mano,self.mazzo)
 
 
     def on_key_press(self, symbol, modifiers):
 
         if symbol == arcade.key.KEY_1:
-            self.buono = self.mazzo[0].clone()
+            self.buono = self.mano[0].clone()
+            self.carta_usata =self.mano[0]
         elif symbol == arcade.key.KEY_2:
-            self.buono = self.mazzo[1].clone()
+            self.buono = self.mano[1].clone()
+            self.carta_usata =self.mano[1]
         elif symbol == arcade.key.KEY_3:
-            self.buono = self.mazzo[2].clone()
+            self.buono = self.mano[2].clone()
+            self.carta_usata =self.mano[2]
+        elif symbol == arcade.key.KEY_4:
+            self.buono = self.mano[3].clone()
+            self.carta_usata =self.mano[3]
         elif symbol == arcade.key.KEY_5:
             self.nemico=nemico_globale.Enemy_general(self.mouse_x,self.mouse_y)
         
