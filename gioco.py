@@ -260,21 +260,12 @@ class Gioco(arcade.Window):
                 self.elisir_cattivo += 1
             self.carica_elisir_cattivo = 0
         
-        
 
     def on_mouse_press(self, x, y, button,modifiers):
         self.mouse_x = x
         self.mouse_y = y
         
-        if ((button == arcade.MOUSE_BUTTON_LEFT) and (self.nemico != None)):
-            if y < 326 :
-                return
-            self.nemico.center_x=x
-            self.nemico.center_y=y
-            self.enemy_list.append(self.nemico)
-            self.cattivi.append(self.nemico)
-            self.nemico = None
-        elif ((button == arcade.MOUSE_BUTTON_RIGHT) and (self.buono != None)) and (self.elisir>= self.buono.costo):
+        if ((button == arcade.MOUSE_BUTTON_LEFT) and (self.buono != None)) and (self.elisir>= self.buono.costo):
             if y > 274 :
                 return
             self.buono.center_x = x
@@ -305,9 +296,11 @@ class Gioco(arcade.Window):
             self.nemico=nemico_globale.Enemy_general(self.mouse_x,self.mouse_y)
         
 
+
 def main():
     gioco = Gioco()
     arcade.run()
+
 
 if __name__ == "__main__":
     main()
