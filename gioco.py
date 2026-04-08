@@ -2,7 +2,6 @@ import arcade
 import torre
 import torre_grande_cattiva
 import torre_grande
-import nemico_globale
 import buoni_globale
 import carte
 import bot
@@ -58,7 +57,7 @@ class Gioco(arcade.Window):
         
         self.background = arcade.load_texture("./assets/sfondo.png")
 
-        #aggiungo le torri
+        #aggiungo gli sprite
         self.lista_torri_cattive.append(torre.torre_class("./assets/torri_piccole_cattive.PNG",0.40,267,465))
         self.lista_torri_cattive.append(torre.torre_class("./assets/torri_piccole_cattive.PNG",0.40,78,465))
         self.torre_grande_cattiva = torre_grande_cattiva.torre_grande_cattiva_class()
@@ -106,11 +105,13 @@ class Gioco(arcade.Window):
     def on_draw(self):
 
         self.clear()
+        # sfondo
         arcade.draw_texture_rect(
             self.background,
             arcade.LBWH(0,0,self.larghezza,self.altezza)
         )
 
+        # personaggia e barre vita
         self.enemy_list.draw()
         for i in self.enemy_list:
             i.on_draw()
@@ -119,6 +120,7 @@ class Gioco(arcade.Window):
         for i in self.buoni_list:
             i.on_draw()
 
+        #torri e barre vita
         self.lista_torri_cattive.draw()
         for i in self.lista_torri_cattive:
             i.on_draw()
@@ -141,11 +143,6 @@ class Gioco(arcade.Window):
         for carta4 in self.mazzo:
             if carta4==self.mano[3]:
                 arcade.draw_texture_rect(carta4.texture,arcade.XYWH(318,300,30,51))
-
-        self.lista_torri_cattive.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
-        self.lista_torri_buone.draw_hit_boxes(arcade.color.BAKER_MILLER_PINK)
-        self.enemy_list.draw_hit_boxes(arcade.color.AMAZON)
-        self.buoni_list.draw_hit_boxes(arcade.color.RED_DEVIL)
 
         if self.game_over:
             arcade.draw_lbwh_rectangle_filled(0, 0, 
@@ -292,8 +289,6 @@ class Gioco(arcade.Window):
         elif symbol == arcade.key.KEY_4:
             self.buono = self.mano[3].clone()
             self.carta_usata =self.mano[3]
-        elif symbol == arcade.key.KEY_5:
-            self.nemico=nemico_globale.Enemy_general(self.mouse_x,self.mouse_y)
         
 
 

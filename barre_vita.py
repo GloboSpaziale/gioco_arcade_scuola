@@ -26,3 +26,13 @@ def draw_health_bar(vita_massima : int,vita_attuale : int,x_creatura,y_creatura,
         HEALTHBAR_HEIGHT,
         arcade.color.GREEN
     )
+
+    #bordo
+    arcade.draw_lbwh_rectangle_outline(
+        x_attuale,
+        y_attuale,
+        HEALTHBAR_WIDTH,
+        HEALTHBAR_HEIGHT,
+        arcade.color.BLACK,
+        1
+    )

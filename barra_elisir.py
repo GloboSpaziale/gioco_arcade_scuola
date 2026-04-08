@@ -37,3 +37,13 @@ def draw_elisir_bar(elisir_attuale ,carica):
         HEALTHBAR_HEIGHT,
         arcade.color.PURPLE_PIZZAZZ
     )
+
+    #bordo
+    arcade.draw_lbwh_rectangle_outline(
+        x_attuale,
+        y_attuale,
+        HEALTHBAR_WIDTH,
+        HEALTHBAR_HEIGHT,
+        arcade.color.BLACK,
+        1
+    )
