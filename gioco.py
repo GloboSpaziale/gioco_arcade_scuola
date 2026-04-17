@@ -98,7 +98,7 @@ class Gioco(arcade.Window):
         self.mazzo.append(buono)
         buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/tank_buono.png",0.75 ,0.1,60,2,10,7)
         self.mazzo.append(buono)
-        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/veloce_buono.png",0.75,2,30,2,5, 5)
+        buono=buoni_globale.Buoni_general(self.mouse_x,self.mouse_y, "./assets/veloce_buono.png",0.75,1.5,30,2,5, 5)
         self.mazzo.append(buono)
         self.mano = carte.prima_mano(self.mazzo)
 
