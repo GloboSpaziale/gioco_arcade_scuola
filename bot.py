@@ -38,6 +38,6 @@ def mazzo_cattivo ():
     mazzo.append(buono)
     buono=nemico_globale.Enemy_general(random.randint(0,350),random.randint(325,600), "./assets/tank_cattivo.png",0.75 ,0.1,65,2,10.5,6)
     mazzo.append(buono)
-    buono=nemico_globale.Enemy_general(random.randint(0,350),random.randint(325,600), "./assets/veloce_cattivo.png",0.75,2,35,2,5.5,4)
+    buono=nemico_globale.Enemy_general(random.randint(0,350),random.randint(325,600), "./assets/veloce_cattivo.png",0.75,1.5,35,2,5.5,4)
     mazzo.append(buono)
     return mazzo
